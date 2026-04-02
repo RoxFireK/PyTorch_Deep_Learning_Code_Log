@@ -1,0 +1,44 @@
+\section{实验背景与数据集}
+
+\subsection{实验背景}
+本实验构建了一个三层全连接神经网络。
+输入处理：将 MNIST 数据集中的 28×28 灰度图像展平为 784 维向量，并在输入层添加偏置项（全1列），得到 785 维输入。
+
+网络结构：第一层全连接层将输入从 785 维映射到 256 维，后接 ReLU 激活函数；第二层全连接层将 256 维映射到 128 维，后接 ReLU 激活函数；第三层全连接层将 128 维映射到 10 维，后接 Softmax 函数输出各类别概率。
+
+权重初始化：采用 He 初始化方法，各层权重按 $\mathrm{scale} = \sqrt{2.0 / \mathrm{input\_dim}}$ 设置随机初始值。
+
+模块实现：将矩阵乘法、ReLU 激活、Softmax 输出、交叉熵损失分别封装为独立类，每个类均实现 forward 前向传播和 backward 反向传播方法，便于梯度计算与参数更新。
+\subsection{数据集}
+
+本实验使用 \textbf{MNIST 手写数字数据集}：
+
+\begin{itemize}
+\item 训练集：60000 张图片
+\item 测试集：10000 张图片
+\item 图片大小：28×28（灰度图）
+\item 分类类别：10 类（数字 0–9）
+\end{itemize}
+
+\subsection{数据预处理}
+
+\subsubsection{归一化处理}
+
+\[
+x = x / 255.0
+\]
+
+\subsubsection{标签处理}
+
+标签转为 One-hot 编码。
+
+\subsubsection{输入展平}
+
+\[
+28 \times 28 \rightarrow 784
+\]
+
+\subsubsection{添加偏置项}
+
+输入层添加偏置项（+1）。
+

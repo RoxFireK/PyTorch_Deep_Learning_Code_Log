@@ -1,0 +1,48 @@
+\section{实验分析与总结}  % 原来是 \chapter
+
+\subsection{网络性能分析}
+
+\begin{itemize}
+\item 三层网络已能较好拟合 MNIST
+\item ReLU 提高非线性表达能力
+\item Softmax + 交叉熵稳定训练
+\end{itemize}
+
+\subsection{参数影响}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{参数} & \textbf{影响} \\
+\hline
+层数增加 & 表达能力增强但易过拟合 \\
+神经元数量 & 过少欠拟合，过多计算量大 \\
+学习率 & 过大震荡，过小收敛慢 \\
+batch\_size & 影响稳定性与速度 \\
+\hline
+\end{tabular}
+\caption{参数影响分析}
+\label{tab:impact}
+\end{table}
+
+\subsection{优化效果}
+
+\begin{itemize}
+\item 动量：加快收敛
+\item L2正则化：防止过拟合
+\item 学习率衰减：提升后期稳定性
+\end{itemize}
+
+\subsection{实验总结}
+
+本实验通过纯 NumPy 实现了一个完整的神经网络训练流程，深入理解了：
+
+\begin{itemize}
+\item 神经网络前向传播与反向传播机制
+\item 各种层（Matmul、ReLU、Softmax）的作用
+\item 损失函数与优化算法原理
+\item 深度学习训练流程
+\end{itemize}
+
+该实验强化了对深度学习底层实现的理解，为后续使用框架（如 PyTorch）奠定了基础。

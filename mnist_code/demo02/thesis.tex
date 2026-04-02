@@ -1,0 +1,29 @@
+\documentclass[cs6size,a4paper,openany]{ctexart}
+
+%=================== 导入配置信息 ===================
+\input{preset}
+\fancyhead[C]{\zihao{5}\kaishu 实验报告：NumPy 实现全连接神经网络}
+
+%=================== 正文开始 ===================
+\begin{document}
+
+%============== 封皮 =================
+%\includepdf[page=1]{cover/cover}
+
+%============== 目录 =================
+\pagestyle{plain}
+\tableofcontents
+\clearpage
+
+%============== 正文 =================
+\pagenumbering{arabic}
+\pagestyle{fancy}
+
+\input{body/chapter1}        % 实验背景
+\input{body/chapter2}        % 实验目的
+\input{body/chapter3}        % 实验方法
+\input{body/chapter4}        % 实验结果
+\input{body/chapter5}        % 实验分析与总结
+\input{body/appendix}        % 附录
+
+\end{document}

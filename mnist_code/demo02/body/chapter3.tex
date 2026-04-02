@@ -1,0 +1,105 @@
+\section{实验方法}  % 原来是 \chapter
+
+\subsection{网络结构设计}
+
+本实验构建了一个三层全连接神经网络。
+
+网络结构：第一层全连接层将输入从 785 维映射到 256 维，后接 ReLU 激活函数；第二层全连接层将 256 维映射到 128 维，后接 ReLU 激活函数；第三层全连接层将 128 维映射到 10 维，后接 Softmax 函数输出各类别概率。
+
+权重初始化：采用 He 初始化方法，各层权重按 $\mathrm{scale} = \sqrt{2.0 / \mathrm{input\_dim}}$ 设置随机初始值。
+
+模块实现：将矩阵乘法、ReLU 激活、Softmax 输出、交叉熵损失分别封装为独立类，每个类均实现 forward 前向传播和 backward 反向传播方法，便于梯度计算与参数更新。
+
+\subsection{网络结构示意图}
+
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[node distance=1.5cm]
+\node (input) [draw, rectangle] {输入层 (784)};
+\node (fc1) [draw, rectangle, below of=input] {全连接层 W1: 785×256};
+\node (relu1) [draw, rectangle, below of=fc1] {ReLU};
+\node (fc2) [draw, rectangle, below of=relu1] {全连接层 W2: 256×128};
+\node (relu2) [draw, rectangle, below of=fc2] {ReLU};
+\node (fc3) [draw, rectangle, below of=relu2] {全连接层 W3: 128×10};
+\node (softmax) [draw, rectangle, below of=fc3] {Softmax};
+\node (loss) [draw, rectangle, below of=softmax] {CrossEntropy Loss};
+
+\draw[->] (input) -- (fc1);
+\draw[->] (fc1) -- (relu1);
+\draw[->] (relu1) -- (fc2);
+\draw[->] (fc2) -- (relu2);
+\draw[->] (relu2) -- (fc3);
+\draw[->] (fc3) -- (softmax);
+\draw[->] (softmax) -- (loss);
+\end{tikzpicture}
+\caption{网络结构示意图}
+\label{fig:network}
+\end{figure}
+
+\subsection{各模块说明}
+
+\subsubsection{Matmul（矩阵乘法层）}
+
+\textbf{前向传播}：
+\[
+y = xW
+\]
+
+\textbf{反向传播}：
+\[
+\frac{\partial L}{\partial x} = \frac{\partial L}{\partial y} W^T
+\]
+\[
+\frac{\partial L}{\partial W} = x^T \frac{\partial L}{\partial y}
+\]
+
+\subsubsection{ReLU 激活函数}
+
+\[
+f(x) = \max(0, x)
+\]
+
+\textbf{梯度}：
+\[
+f'(x) = 
+\begin{cases} 
+1 & x > 0 \\
+0 & x \leq 0
+\end{cases}
+\]
+
+\subsubsection{Softmax}
+
+\[
+S_i = \frac{e^{x_i}}{\sum_j e^{x_j}}
+\]
+
+\subsubsection{交叉熵损失函数}
+
+\[
+L = -\sum y \log(\hat{y})
+\]
+
+\subsection{优化方法}
+
+\subsubsection{L2 正则化}
+
+\[
+L = L + \lambda \|W\|^2
+\]
+
+\subsubsection{动量梯度下降}
+
+\[
+v = \mu v + \eta \nabla W
+\]
+\[
+W = W - v
+\]
+
+\subsubsection{学习率衰减}
+
+每 10 个 epoch：
+\[
+lr = lr \times 0.95
+\]
