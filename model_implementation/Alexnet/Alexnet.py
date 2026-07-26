@@ -49,6 +49,6 @@ class Alexnet(nn.Module):
 
 if __name__ == "__main__":
     alex = Alexnet()
-    input = torch.ones(1,3,224,224)
+    input = torch.ones(64,3,224,224)
     output = alex(input)
     print(output.shape)
